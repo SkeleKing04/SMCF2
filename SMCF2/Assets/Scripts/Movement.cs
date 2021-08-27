@@ -6,6 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public GameManager gameManager;
+    public Claws claws;
     public float MoveSpeed;
     public float dashForce;
     public float jumpForce;
@@ -13,7 +14,8 @@ public class Movement : MonoBehaviour
     public bool Dashing;
     private Rigidbody rigidbody;
     private Terrain terrain;
-    public GameObject center;
+    public GameObject boss;
+    public GameObject centerOfCrab;
     public float rotateSpeed;
     private Vector3 lookPos;
     public float savedTime;
@@ -21,6 +23,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        claws = FindObjectOfType<Claws>();
         rigidbody = GetComponent<Rigidbody>();
         terrain = FindObjectOfType<Terrain>();
     }
@@ -31,10 +34,13 @@ public class Movement : MonoBehaviour
         Debug.Log("Vertical = " + Input.GetAxis("Vertical"));
         Debug.Log("Horizontal = " + Input.GetAxis("Horizontal"));
 
-        lookPos = center.transform.position- transform.position;
+        lookPos = boss.transform.position- rigidbody.transform.position;
         Debug.Log("lookPos is " + lookPos);
+        //centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
         lookPos.y = 0;
         rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+
+
         if (!Dashing)
         {
             rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
