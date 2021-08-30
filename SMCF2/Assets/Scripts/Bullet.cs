@@ -5,7 +5,6 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float savedTime;
-    public GameObject self;
     private void Awake()
     {
         savedTime = GameManager.GlobalTimer;
@@ -15,12 +14,15 @@ public class Bullet : MonoBehaviour
         switch (GameManager.GlobalTimer >= savedTime + 3)
         {
             case true:
-                Destroy(self);
+                Destroy(gameObject);
                 break;
         }    
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(self);
+        if(collision.transform.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

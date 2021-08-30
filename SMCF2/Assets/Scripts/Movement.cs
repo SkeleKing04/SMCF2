@@ -64,9 +64,9 @@ public class Movement : MonoBehaviour
         }
         if (Grounded)
         {
-            rigidbody.AddForce(transform.up * Input.GetAxis("Jump") * jumpForce, ForceMode.Impulse);
+            rigidbody.AddForce(transform.up * Mathf.Round(Input.GetAxis("Jump")) * jumpForce, ForceMode.Impulse);
         }
-        if(Dashing && GameManager.GlobalTimer - savedTime >= 0.75)
+        if(Dashing && GameManager.GlobalTimer - savedTime >= 0.5)
         {
             Dashing = false;
         }
