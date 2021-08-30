@@ -36,35 +36,37 @@ public class Movement : MonoBehaviour
 
         lookPos = boss.transform.position- rigidbody.transform.position;
         Debug.Log("lookPos is " + lookPos);
-        //centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+        centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
         lookPos.y = 0;
         rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+        lookPos = boss.transform.position - rigidbody.transform.position;
+        centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
 
 
         if (!Dashing)
         {
             rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
             {
-                if (Input.GetKeyUp(KeyCode.W))
+                if (Input.GetKeyDown(KeyCode.W))
                 {
                     rigidbody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
                 }
-                if (Input.GetKeyUp(KeyCode.S))
+                else
                 {
                     rigidbody.AddForce(transform.forward * -dashForce, ForceMode.Impulse);
-
                 }
                 rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
-                savedTime = gameManager.GlobalTimer;
+                savedTime = GameManager.GlobalTimer;
                 Dashing = true;
+                
             }
         }
         if (Grounded)
         {
             rigidbody.AddForce(transform.up * Input.GetAxis("Jump") * jumpForce, ForceMode.Impulse);
         }
-        if(Dashing && gameManager.GlobalTimer - savedTime >= 0.75)
+        if(Dashing && GameManager.GlobalTimer - savedTime >= 0.75)
         {
             Dashing = false;
         }

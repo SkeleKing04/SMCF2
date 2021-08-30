@@ -22,13 +22,13 @@ public class Claws : MonoBehaviour
         {
             Debug.Log("left firing");
             Rigidbody shellInstance = Instantiate(bullet, fireTransforms[0].transform.position, fireTransforms[0].transform.rotation) as Rigidbody;
-            shellInstance.velocity = bulletForce * fireTransforms[0].forward;
+            shellInstance.velocity = bulletForce * fireTransforms[0].up;
         }
         if (Input.GetButtonDown("Fire2"))
         {
             Debug.Log("Right Firing");
             Rigidbody shellInstance = Instantiate(bullet, fireTransforms[1].transform.position, fireTransforms[1].transform.rotation) as Rigidbody;
-            shellInstance.velocity = bulletForce * fireTransforms[1].forward;
+            shellInstance.velocity = bulletForce * fireTransforms[1].up;
         }
     }
     // Set the shell's velocity to the launch force in the fire

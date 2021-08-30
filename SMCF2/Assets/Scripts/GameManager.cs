@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public float GlobalTimer;
+    public static float GlobalTimer;
     // Start is called before the first frame update
     void Start()
     {
