@@ -8,6 +8,10 @@ public class BossHeath : MonoBehaviour
     public Image BossBarFull;
     public float StartHealth = 100;
     public float CurrentHealth;
+    public bool dead = false;
+    private float savedTime;
+    public Text text;
+    private bool textOn = false;
     private void Start()
     {
         CurrentHealth = StartHealth;
@@ -26,7 +30,21 @@ public class BossHeath : MonoBehaviour
         {
             case 0:
                 Destroy(gameObject);
+                dead = true;
                 break;
+        }
+        if(dead && (GameManager.GlobalTimer - savedTime >= 0.5))
+        {
+            if(textOn)
+            {
+                savedTime = GameManager.GlobalTimer;
+                text.gameObject.SetActive(false);
+            }
+            else if (!textOn)
+            {
+                savedTime = GameManager.GlobalTimer;
+                text.gameObject.SetActive(true);
+            }
         }
     }
 }

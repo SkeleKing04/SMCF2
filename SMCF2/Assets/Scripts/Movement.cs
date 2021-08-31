@@ -6,6 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public GameManager gameManager;
+    private BossHeath bossHeath;
     public Claws claws;
     public float MoveSpeed;
     public float dashForce;
@@ -23,6 +24,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        bossHeath = FindObjectOfType<BossHeath>();
         claws = FindObjectOfType<Claws>();
         rigidbody = GetComponent<Rigidbody>();
         terrain = FindObjectOfType<Terrain>();
@@ -31,16 +33,20 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Vertical = " + Input.GetAxis("Vertical"));
-        Debug.Log("Horizontal = " + Input.GetAxis("Horizontal"));
-
-        lookPos = boss.transform.position- rigidbody.transform.position;
-        Debug.Log("lookPos is " + lookPos);
-        centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-        lookPos.y = 0;
-        rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-        lookPos = boss.transform.position - rigidbody.transform.position;
-        centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+        switch (bossHeath.dead)
+        {
+            case false:
+                //Debug.Log("Vertical = " + Input.GetAxis("Vertical"));
+                //Debug.Log("Horizontal = " + Input.GetAxis("Horizontal"));
+                lookPos = boss.transform.position- rigidbody.transform.position;
+                //Debug.Log("lookPos is " + lookPos);
+                centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+                lookPos.y = 0;
+                rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+                lookPos = boss.transform.position - rigidbody.transform.position;
+                centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+                break;
+        }
 
 
         if (!Dashing)
