@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Terrain
   - Bullet
+  - Enemy Bullet
+  - Boss
   layers:
   - Default
   - TransparentFX

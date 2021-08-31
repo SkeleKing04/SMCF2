@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag != "Player")
+        if(collision.transform.tag != "Player" || collision.transform.tag != "Bullet")
         {
             Destroy(gameObject);
         }

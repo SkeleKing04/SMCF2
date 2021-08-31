@@ -26,7 +26,7 @@ public class TrackingMissile : MonoBehaviour
     {
         lookPos = player.transform.position- rigidbody.transform.position;
         rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-        rigidbody.position += (transform.forward * MoveSpeed * Time.deltaTime);
+        rigidbody.transform.position += (transform.forward * MoveSpeed * Time.deltaTime);
         if(GameManager.GlobalTimer > savedTime + 100)
         {
             Destroy(gameObject);
@@ -34,7 +34,8 @@ public class TrackingMissile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag != "Boss" || collision.transform.tag != "Enemy Missile")
+        Debug.Log(gameObject.name + " has collided with " + collision.transform.tag);
+        if(collision.transform.tag != "Enemy Bullet" && collision.transform.tag != "Boss")
         {
             Destroy(gameObject);
         }

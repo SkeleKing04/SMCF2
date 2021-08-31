@@ -18,6 +18,7 @@ public class PlayerHealth : MonoBehaviour
         if(collision.transform.tag == "Enemy Bullet")
         {
             CurrentHealth -= Mathf.Clamp(1, 0, StartHealth);
+            HealthBarFull.fillAmount = CurrentHealth / 100;
         }
     }
     private void Update()
