@@ -14,6 +14,7 @@ public class TrackingMissile : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class TrackingMissile : MonoBehaviour
         lookPos = player.transform.position- rigidbody.transform.position;
         rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
         rigidbody.position += (transform.forward * MoveSpeed * Time.deltaTime);
-        if(GameManager.GlobalTimer > savedTime + 3)
+        if(GameManager.GlobalTimer > savedTime + 100)
         {
             Destroy(gameObject);
         }
@@ -36,7 +37,6 @@ public class TrackingMissile : MonoBehaviour
         if(collision.transform.tag != "Boss" || collision.transform.tag != "Enemy Missile")
         {
             Destroy(gameObject);
-            
         }
     }
 }
