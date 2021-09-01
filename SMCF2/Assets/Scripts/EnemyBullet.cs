@@ -22,7 +22,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if(collision.transform.tag != "Boss" && collision.transform.tag != "Enemy Bullet")
         {
-            Debug.Log("Collided at " + gameObject.transform.position);
+            //Debug.Log("Collided at " + gameObject.transform.position);
             Destroy(gameObject);
         }
     }

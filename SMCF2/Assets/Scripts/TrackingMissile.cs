@@ -34,7 +34,7 @@ public class TrackingMissile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(gameObject.name + " has collided with " + collision.transform.tag);
+        Debug.Log(gameObject.name + " has collided with " + collision.gameObject.name);
         if(collision.transform.tag != "Enemy Bullet" && collision.transform.tag != "Boss")
         {
             Destroy(gameObject);

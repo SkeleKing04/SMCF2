@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     {
         if(collision.transform.tag != "Player" && collision.transform.tag != "Bullet")
         {
-            Debug.Log("Collided at " + gameObject.transform.position);
+            //Debug.Log("Collided at " + gameObject.transform.position);
             Destroy(gameObject);
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossShooting : MonoBehaviour
 {
     public float savedTime;
-    public Transform fireTransform;
+    public GameObject fireTransform;
     public Rigidbody[] bullet;
     public enum BulletState
     {
@@ -35,16 +35,15 @@ public class BossShooting : MonoBehaviour
             switch (bulletState)
             {
                case BulletState.bomb:
-                    Debug.Log("Spawned Bomb");
-                    spawn = new Vector3(gameObject.transform.position.x + 20, fireTransform.transform.position.y, gameObject.transform.position.z + 20);
-                    Rigidbody shellInstance = Instantiate(bullet[0], spawn, fireTransform.transform.rotation) as Rigidbody;
+                    //Debug.Log("Spawned Bomb");
+                    Rigidbody shellInstance = Instantiate(bullet[0], new Vector3(20 * Mathf.Cos(transform.rotation.y + (90* (Mathf.PI/180))), fireTransform.transform.position.y, 0 * Mathf.Sin(transform.rotation.y * 4)), fireTransform.transform.rotation) as Rigidbody;
                     //TRIG USED HERE
                     // Sqrt(y^2 + (Sqrt(x^2 + z^2))^2)
                     shellInstance.velocity = new Vector3
                                                     (
-                                                        (player.transform.position.x - fireTransform.position.x),
-                                                        (player.transform.position.y - fireTransform.position.y) / 2,
-                                                        (player.transform.position.z - fireTransform.position.z)
+                                                        (player.transform.position.x - fireTransform.transform.position.x),
+                                                        (player.transform.position.y - fireTransform.transform.position.y) / 2,
+                                                        (player.transform.position.z - fireTransform.transform.position.z)
                     );
                     //canSpawn = false;
                     break;
@@ -52,14 +51,14 @@ public class BossShooting : MonoBehaviour
                     Debug.Log("Spawned Missile");
                     spawn = new Vector3(fireTransform.transform.position.x + i, fireTransform.transform.position.y, fireTransform.transform.position.z);
                     shellInstance = Instantiate(bullet[1], spawn, fireTransform.transform.rotation) as Rigidbody;
-                    shellInstance.velocity = 1 * fireTransform.forward;
+                    shellInstance.velocity = 1 * fireTransform.transform.forward;
                     canSpawn = false;
                     break;
                 case BulletState.bullet:
                     Debug.Log("Spawned Bullet");
                     spawn = new Vector3(fireTransform.transform.position.x, fireTransform.transform.position.y, fireTransform.transform.position.z);
                     shellInstance = Instantiate(bullet[2], spawn, fireTransform.transform.rotation) as Rigidbody;
-                    shellInstance.velocity = 1 * fireTransform.forward;
+                    shellInstance.velocity = 1 * fireTransform.transform.forward;
                     canSpawn = false;
                     break;
             }

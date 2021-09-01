@@ -11299,7 +11299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savedTime: 0
-  fireTransform: {fileID: 1504622807}
+  fireTransform: {fileID: 1504622806}
   bullet:
   - {fileID: 7294129728258102269, guid: 387f95bac63ae044cb9ace7160b75c1d, type: 3}
   - {fileID: 1030405011812111277, guid: 9a3dc52e42cb88d44a106ac745647c13, type: 3}
@@ -11348,7 +11348,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740009669}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11358,7 +11358,7 @@ Transform:
   - {fileID: 1504622807}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1759057784
 GameObject:
   m_ObjectHideFlags: 0

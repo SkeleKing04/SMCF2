@@ -27,6 +27,6 @@ public class BossPlayerTrack : MonoBehaviour
         lookPos = player.gameObject.transform.position - gameObject.transform.position;
         //Quaternion test = gameObject.transform.rotation;
         //test.x += 90;
-        fireTransform.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+        //fireTransform.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
     }
 }
