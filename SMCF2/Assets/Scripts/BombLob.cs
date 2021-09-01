@@ -13,8 +13,6 @@ public class BombLob : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        Fire();
     }
 
     // Update is called once per frame
@@ -22,11 +20,17 @@ public class BombLob : MonoBehaviour
     {
     }
 
+    private void Awake()
+    {
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        Fire();
+    }
     private void Fire()
     {
-        lookPos = player.transform.position - rigidbody.transform.position;
-        rigidbody.AddForce(transform.forward * (player.transform.position.z / 2), ForceMode.Impulse);
-        rigidbody.AddForce(transform.right * (player.transform.position.x / 2), ForceMode.Impulse);
-        //rigidbody.AddForce(transform.up * -player.transform.position.y, ForceMode.Impulse);
+        //lookPos = player.transform.position - rigidbody.transform.position;
+        //rigidbody.AddForce(transform.forward * player.transform.position.z, ForceMode.Impulse);
+        //rigidbody.AddForce(transform.right * player.transform.position.x, ForceMode.Impulse);
+        //rigidbody.AddForce(transform.up * player.transform.position.y, ForceMode.Impulse);
     }
 }

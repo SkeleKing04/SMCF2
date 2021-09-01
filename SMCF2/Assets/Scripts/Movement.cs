@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour
                 //Debug.Log("Horizontal = " + Input.GetAxis("Horizontal"));
                 lookPos = boss.transform.position- rigidbody.transform.position;
                 //Debug.Log("lookPos is " + lookPos);
-                centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+                //centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
                 lookPos.y = 0;
                 rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
                 lookPos = boss.transform.position - rigidbody.transform.position;

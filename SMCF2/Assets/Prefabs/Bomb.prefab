@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4506324267983890669}
   - component: {fileID: 6856882837965014522}
   - component: {fileID: 7294129728258102269}
-  - component: {fileID: -7216668374437000321}
+  - component: {fileID: 93031612560164362}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Enemy Bullet
@@ -113,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7216668374437000321
+--- !u!114 &93031612560164362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,9 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1509920946543773866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921b80f419b18db45b771dfc79615a05, type: 3}
+  m_Script: {fileID: 11500000, guid: 6991509cf9f9bdd40bc9fb85d9956d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 7294129728258102269}
-  explosionForce: 10
-  explosionRadius: 1
+  savedTime: 0
