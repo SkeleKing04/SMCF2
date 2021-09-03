@@ -55,9 +55,9 @@ public class BossShooting : MonoBehaviour
                     // Sqrt(y^2 + (Sqrt(x^2 + z^2))^2)
                     shellInstance.velocity = new Vector3
                                                     (
-                                                        (player.transform.position.x - shellInstance.transform.position.x),
-                                                        (player.transform.position.y - shellInstance.transform.position.y) / 2,
-                                                        (player.transform.position.z - shellInstance.transform.position.z)
+                                                        ((player.transform.position.x + Random.Range(-5, 5))- shellInstance.transform.position.x),
+                                                        ((player.transform.position.y + Random.Range(-5, 5) )- shellInstance.transform.position.y) / 2,
+                                                        ((player.transform.position.z + Random.Range(-5, 5) )- shellInstance.transform.position.z)
                     );
                     //canSpawn = false;
                     break;
