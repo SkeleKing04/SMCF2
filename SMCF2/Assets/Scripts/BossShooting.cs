@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossShooting : MonoBehaviour
 {
     public float savedTime;
+    public SinDraw spawnPosSet;
     public GameObject fireTransform;
     public Rigidbody[] bullet;
     public enum Ammo
@@ -17,35 +18,78 @@ public class BossShooting : MonoBehaviour
     public enum ShootingArangement{
         Gattling,
         Starfire,
-        Controlled
+        LowWideMoving
     };
     public ShootingArangement shootingArangement;
-    public int bulletCount;
+    public float rpm;
+    public float bombTargetOffset;
     public Vector3 spawn;
     private Vector3 lookPos;
     private Rigidbody shellInstance;
     private GameObject player;
-    public float Speed;
-    public float Size;
     private bool canSpawn = true;
     // Start is called before the first frame update
     void Start()
     {
+        spawnPosSet = GetComponent<SinDraw>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canSpawn && GameManager.GlobalTimer - savedTime >= 0.01)
+        switch (shootingArangement)
         {
-            for(int i = 0; i < bulletCount; i++)
-            {
+            case ShootingArangement.Gattling:
+                rpm = 0.1f;
+                spawnPosSet.Speed = 1;
+                spawnPosSet.Size = 2;
+                spawnPosSet.xMulti = 1;
+                spawnPosSet.yMulti = 0;
+                spawnPosSet.zMulti = 1;
+                spawnPosSet.xOffset = 0;
+                spawnPosSet.yOffset = 5;
+                spawnPosSet.zOffset = 0;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 1;
+            break;
+            case ShootingArangement.Starfire:
+                rpm = 0.5f;
+                spawnPosSet.Speed = 5;
+                spawnPosSet.Size = 10;
+                spawnPosSet.xMulti = 1;
+                spawnPosSet.yMulti = 0;
+                spawnPosSet.zMulti = 1;
+                spawnPosSet.xOffset = 0;
+                spawnPosSet.yOffset = 10;
+                spawnPosSet.zOffset = 0;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 1;
+            break;
+            case ShootingArangement.LowWideMoving:
+                rpm = 0.4f;
+                spawnPosSet.Speed = 2;
+                spawnPosSet.Size = 5;
+                spawnPosSet.xMulti = 5;
+                spawnPosSet.yMulti = 1;
+                spawnPosSet.zMulti = 0;
+                spawnPosSet.xOffset = Mathf.Sin(Time.time * 1) * 10;
+                spawnPosSet.yOffset = 10;
+                spawnPosSet.zOffset = Mathf.Cos(Time.time * 1) * 10;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 1;
+                spawnPosSet.SinCosTan[2] = 0;
+                break;
+        }
+        if(canSpawn && GameManager.GlobalTimer - savedTime >= rpm)
+        {
             switch (ammo)
             {
                case Ammo.bomb:
                     //Debug.Log("Spawned Bomb");
-                    spawn = new Vector3((Mathf.Sin(Time.time * Speed) * Size), fireTransform.transform.position.y, (Mathf.Cos(Time.time * Speed) * Size));
+                    spawn = spawnPosSet.pos;
                     Debug.Log("Rotation " + transform.rotation.y);
                     //lookPos = player.transform.position - spawn;
                     //Debug.Log("LookPos - " + lookPos);
@@ -55,27 +99,33 @@ public class BossShooting : MonoBehaviour
                     // Sqrt(y^2 + (Sqrt(x^2 + z^2))^2)
                     shellInstance.velocity = new Vector3
                                                     (
-                                                        ((player.transform.position.x + Random.Range(-5, 5))- shellInstance.transform.position.x),
-                                                        ((player.transform.position.y + Random.Range(-5, 5) )- shellInstance.transform.position.y) / 2,
-                                                        ((player.transform.position.z + Random.Range(-5, 5) )- shellInstance.transform.position.z)
+                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x) / 3.75f,
+                                                        ((player.transform.position.y + 25 + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.y),
+                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z) / 3.75f
                     );
+
                     //canSpawn = false;
                     break;
                 case Ammo.missile:
                     Debug.Log("Spawned Missile");
-                    spawn = new Vector3(fireTransform.transform.position.x + i, fireTransform.transform.position.y, fireTransform.transform.position.z);
+                    spawn = spawnPosSet.pos;
                     shellInstance = Instantiate(bullet[1], spawn, fireTransform.transform.rotation) as Rigidbody;
                     shellInstance.velocity = 1 * fireTransform.transform.forward;
-                    canSpawn = false;
+                    //canSpawn = false;
                     break;
                 case Ammo.bullet:
                     Debug.Log("Spawned Bullet");
-                    spawn = new Vector3(fireTransform.transform.position.x, fireTransform.transform.position.y, fireTransform.transform.position.z);
-                    shellInstance = Instantiate(bullet[2], spawn, fireTransform.transform.rotation) as Rigidbody;
-                    shellInstance.velocity = 1 * fireTransform.transform.forward;
-                    canSpawn = false;
+                    spawn = spawnPosSet.pos;
+                    lookPos = player.transform.position - fireTransform.transform.position;
+                    shellInstance = Instantiate(bullet[2], spawn, Quaternion.LookRotation(lookPos)) as Rigidbody;
+                    shellInstance.velocity = new Vector3
+                                                    (
+                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x),
+                                                        ((player.transform.position.y + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.y) / 2,
+                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z)
+                    );
+                    //canSpawn = false;
                     break;
-            }
             }
             savedTime = GameManager.GlobalTimer;
         }

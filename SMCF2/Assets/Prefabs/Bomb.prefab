@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7294129728258102269}
   - component: {fileID: 1594828325407160740}
   - component: {fileID: -3331935628698605023}
+  - component: {fileID: 3177595870453314289}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Enemy Bullet
@@ -106,7 +107,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1509920946543773866}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -225,3 +226,16 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &3177595870453314289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509920946543773866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be20a3ac6570c454ca01f5b85de8f703, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dieAfter: 3

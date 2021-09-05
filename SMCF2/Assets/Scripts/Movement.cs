@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     public float rotateSpeed;
     private Vector3 lookPos;
     public float savedTime;
+    public ParticleSystem[] dashParticles;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,19 +49,21 @@ public class Movement : MonoBehaviour
                 break;
         }
 
+            rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
 
         if (!Dashing)
         {
-            rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
             {
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     rigidbody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+                    ParticleSystem dashParticle = Instantiate(dashParticles[0], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
                 else
                 {
                     rigidbody.AddForce(transform.forward * -dashForce, ForceMode.Impulse);
+                    ParticleSystem dashParticle = Instantiate(dashParticles[1], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
                 rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
                 savedTime = GameManager.GlobalTimer;
@@ -72,7 +75,7 @@ public class Movement : MonoBehaviour
         {
             rigidbody.AddForce(transform.up * Mathf.Round(Input.GetAxis("Jump")) * jumpForce, ForceMode.Impulse);
         }
-        if(Dashing && GameManager.GlobalTimer - savedTime >= 0.5)
+        if(Dashing && GameManager.GlobalTimer - savedTime >= 0.4)
         {
             Dashing = false;
         }

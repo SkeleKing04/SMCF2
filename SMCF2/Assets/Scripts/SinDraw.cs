@@ -63,6 +63,5 @@ public class SinDraw : MonoBehaviour
                 pos.z = zOffset + Mathf.Tan(Time.time * Speed * zMulti) * Size;
                 break;
         }
-        gameObject.transform.position = pos;
     }
 }

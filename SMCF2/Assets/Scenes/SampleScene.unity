@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4482447, g: 0.4982717, b: 0.57558084, a: 1}
+  m_IndirectSpecularColor: {r: 0.4482453, g: 0.49827206, b: 0.5755818, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6136,7 +6136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   claws: {fileID: 0}
-  MoveSpeed: 10
+  MoveSpeed: 20
   dashForce: 10
   jumpForce: 1
   Grounded: 0
@@ -6145,6 +6145,9 @@ MonoBehaviour:
   centerOfCrab: {fileID: 930840585}
   rotateSpeed: 1000
   savedTime: 0
+  dashParticles:
+  - {fileID: 8136237476449840163, guid: e74f1ff7eeb39da439d3d3b1c06e3f9e, type: 3}
+  - {fileID: 987916079782413225, guid: e3c113cc40cd76d4a92aba1d71afa0b3, type: 3}
 --- !u!4 &1458588166
 Transform:
   m_ObjectHideFlags: 0
@@ -6152,7 +6155,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1458588164}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11209,6 +11212,7 @@ GameObject:
   - component: {fileID: 1740009672}
   - component: {fileID: 1740009671}
   - component: {fileID: 1740009670}
+  - component: {fileID: 1740009677}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -11269,17 +11273,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   savedTime: 0
+  spawnPosSet: {fileID: 0}
   fireTransform: {fileID: 1504622806}
   bullet:
   - {fileID: 7294129728258102269, guid: 387f95bac63ae044cb9ace7160b75c1d, type: 3}
   - {fileID: 1030405011812111277, guid: 9a3dc52e42cb88d44a106ac745647c13, type: 3}
-  - {fileID: 4722703004891846867, guid: 7c6c7046a580dc046ad55de422714bee, type: 3}
+  - {fileID: 6704353545640559192, guid: c4d2246cc1fceb1478ac3e7072539e75, type: 3}
   ammo: 0
-  shootingArangement: 0
-  bulletCount: 1
+  shootingArangement: 1
+  rpm: 0.5
+  bombTargetOffset: 1
   spawn: {x: 0, y: 0, z: 0}
-  Speed: 10
-  Size: 10
 --- !u!114 &1740009674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11321,7 +11325,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740009669}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11331,7 +11335,29 @@ Transform:
   - {fileID: 1504622807}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1740009677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740009669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ea732b247bd1c4d8b213ade45cd60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pos: {x: 0, y: 0, z: 0}
+  Speed: 0
+  Size: 0
+  xMulti: 0
+  yMulti: 0
+  zMulti: 0
+  xOffset: 0
+  yOffset: 0
+  zOffset: 0
+  SinCosTan: 000000000000000000000000
 --- !u!1 &1759057784
 GameObject:
   m_ObjectHideFlags: 0
