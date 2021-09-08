@@ -48,7 +48,7 @@ public class BossShooting : MonoBehaviour
                 spawnPosSet.yMulti = 0;
                 spawnPosSet.zMulti = 1;
                 spawnPosSet.xOffset = 0;
-                spawnPosSet.yOffset = 5;
+                spawnPosSet.yOffset = transform.position.y + 5;
                 spawnPosSet.zOffset = 0;
                 spawnPosSet.SinCosTan[0] = 0;
                 spawnPosSet.SinCosTan[1] = 0;
@@ -62,7 +62,7 @@ public class BossShooting : MonoBehaviour
                 spawnPosSet.yMulti = 0;
                 spawnPosSet.zMulti = 1;
                 spawnPosSet.xOffset = 0;
-                spawnPosSet.yOffset = 10;
+                spawnPosSet.yOffset = transform.position.y + 10;
                 spawnPosSet.zOffset = 0;
                 spawnPosSet.SinCosTan[0] = 0;
                 spawnPosSet.SinCosTan[1] = 0;
@@ -76,7 +76,7 @@ public class BossShooting : MonoBehaviour
                 spawnPosSet.yMulti = 1;
                 spawnPosSet.zMulti = 0;
                 spawnPosSet.xOffset = Mathf.Sin(Time.time * 1) * 10;
-                spawnPosSet.yOffset = 10;
+                spawnPosSet.yOffset = transform.position.y + 10;
                 spawnPosSet.zOffset = Mathf.Cos(Time.time * 1) * 10;
                 spawnPosSet.SinCosTan[0] = 0;
                 spawnPosSet.SinCosTan[1] = 1;
@@ -99,9 +99,9 @@ public class BossShooting : MonoBehaviour
                     // Sqrt(y^2 + (Sqrt(x^2 + z^2))^2)
                     shellInstance.velocity = new Vector3
                                                     (
-                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x) / 3.75f,
-                                                        ((player.transform.position.y + 25 + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.y),
-                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z) / 3.75f
+                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x) / 6.35f,
+                                                        ((25 + Random.Range(-bombTargetOffset, bombTargetOffset))),
+                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z) / 6.35f
                     );
 
                     //canSpawn = false;
@@ -118,12 +118,9 @@ public class BossShooting : MonoBehaviour
                     spawn = spawnPosSet.pos;
                     lookPos = player.transform.position - fireTransform.transform.position;
                     shellInstance = Instantiate(bullet[2], spawn, Quaternion.LookRotation(lookPos)) as Rigidbody;
-                    shellInstance.velocity = new Vector3
-                                                    (
-                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x),
-                                                        ((player.transform.position.y + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.y) / 2,
-                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z)
-                    );
+                    shellInstance.velocity = (player.transform.position - shellInstance.transform.position) * 5;
+                    lookPos = player.transform.position - shellInstance.transform.position;
+                    shellInstance.transform.rotation = Quaternion.Slerp(shellInstance.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * 10000);
                     //canSpawn = false;
                     break;
             }

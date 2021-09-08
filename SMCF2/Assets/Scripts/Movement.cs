@@ -49,7 +49,7 @@ public class Movement : MonoBehaviour
                 break;
         }
 
-            rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * MoveSpeed * Time.deltaTime);
+            rigidbody.position += (transform.right * Input.GetAxis("Horizontal") * Time.deltaTime * MoveSpeed);
 
         if (!Dashing)
         {
@@ -57,15 +57,15 @@ public class Movement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    rigidbody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-                    ParticleSystem dashParticle = Instantiate(dashParticles[0], transform.position, gameObject.transform.rotation) as ParticleSystem;
+                    rigidbody.AddForce(transform.forward * Time.deltaTime*  dashForce, ForceMode.Impulse);
+                    //ParticleSystem dashParticle = Instantiate(dashParticles[0], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
                 else
                 {
-                    rigidbody.AddForce(transform.forward * -dashForce, ForceMode.Impulse);
-                    ParticleSystem dashParticle = Instantiate(dashParticles[1], transform.position, gameObject.transform.rotation) as ParticleSystem;
+                    rigidbody.AddForce(transform.forward *Time.deltaTime * -dashForce, ForceMode.Impulse);
+                    //ParticleSystem dashParticle = Instantiate(dashParticles[1], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
-                rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
+                //rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
                 savedTime = GameManager.GlobalTimer;
                 Dashing = true;
                 
@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour
         }
         if (Grounded)
         {
-            rigidbody.AddForce(transform.up * Mathf.Round(Input.GetAxis("Jump")) * jumpForce, ForceMode.Impulse);
+            rigidbody.AddForce(transform.up * Mathf.Round(Input.GetAxis("Jump")) * Time.deltaTime * jumpForce, ForceMode.Impulse);
         }
         if(Dashing && GameManager.GlobalTimer - savedTime >= 0.4)
         {
