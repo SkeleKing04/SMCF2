@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public GameManager gameManager;
-    private BossHeath bossHeath;
+    private BossAI bossAI;
     public Claws claws;
     public float MoveSpeed;
     public float dashForce;
@@ -25,7 +25,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        bossHeath = FindObjectOfType<BossHeath>();
+        bossAI = FindObjectOfType<BossAI>();
         claws = FindObjectOfType<Claws>();
         rigidbody = GetComponent<Rigidbody>();
         terrain = FindObjectOfType<Terrain>();
@@ -34,7 +34,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (bossHeath.dead)
+        switch (bossAI.dead)
         {
             case false:
                 //Debug.Log("Vertical = " + Input.GetAxis("Vertical"));
