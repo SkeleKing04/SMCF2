@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public GameManager gameManager;
+    private GameManager gameManager;
     private BossAI bossAI;
-    public Claws claws;
+    private Claws claws;
     public float MoveSpeed;
     public float dashForce;
     public float jumpForce;
-    public bool Grounded;
+    private bool Grounded;
     public bool Dashing;
     private Rigidbody rigidbody;
     private Terrain terrain;
     public GameObject boss;
     public GameObject centerOfCrab;
-    public float rotateSpeed;
+    private float rotateSpeed = 1000;
     private Vector3 lookPos;
-    public float savedTime;
+    private float savedTime;
     public ParticleSystem[] dashParticles;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
+        {
+//            Debug.Log("Gate 5");
         switch (bossAI.dead)
         {
             case false:
@@ -57,12 +60,12 @@ public class Movement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.W))
                 {
-                    rigidbody.AddForce(transform.forward * Time.deltaTime*  dashForce, ForceMode.Impulse);
+                    rigidbody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
                     //ParticleSystem dashParticle = Instantiate(dashParticles[0], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
                 else
                 {
-                    rigidbody.AddForce(transform.forward *Time.deltaTime * -dashForce, ForceMode.Impulse);
+                    rigidbody.AddForce(transform.forward * -dashForce, ForceMode.Impulse);
                     //ParticleSystem dashParticle = Instantiate(dashParticles[1], transform.position, gameObject.transform.rotation) as ParticleSystem;
                 }
                 //rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
@@ -71,13 +74,14 @@ public class Movement : MonoBehaviour
                 
             }
         }
-        if (Grounded)
+        if (Grounded && Input.GetKeyDown(KeyCode.Space))
         {
-            rigidbody.AddForce(transform.up * Mathf.Round(Input.GetAxis("Jump")) * Time.deltaTime * jumpForce, ForceMode.Impulse);
+            rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
         if(Dashing && GameManager.GlobalTimer - savedTime >= 0.4)
         {
             Dashing = false;
+        }
         }
 
     }

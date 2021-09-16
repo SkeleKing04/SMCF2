@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BossAI : MonoBehaviour
 {
+    private GameManager gameManager;
     public enum BossType
     {
         Bomb,
@@ -12,27 +13,25 @@ public class BossAI : MonoBehaviour
         Bullet
     };
     public BossType bossType;
-    public int bossTypeAsInt;
+    private int bossTypeAsInt;
     public GameObject[] bossTerrains;
     public Transform[] PlayerSpawns;
     public Transform[] BossSpawns;
-    public GameObject player;
-     public Image BossBarFull;
+    private GameObject player;
+    public Image BossBarFull;
     public float StartHealth = 100;
     public float CurrentHealth;
     public bool dead = false;
     private float savedTime;
-    public Text text;
-    public bool textOn = false;
     public float LaunchForce;
     public ParticleSystem[] particle;
     private bool Launching;
     private Rigidbody target;
     private Vector3 lookPos;
     private Vector3 initialPos;
-    public float rotateSpeed;
+    private float rotateSpeed = 1000;
     public GameObject fireTransform;
-    public SinDraw spawnPosSet;
+    private SinDraw spawnPosSet;
     public Rigidbody[] bullet;
     public enum Ammo
     {
@@ -44,46 +43,45 @@ public class BossAI : MonoBehaviour
     public enum ShootingArangement{
         Gattling,
         Starfire,
-        LowWideMoving
+        LowWideMoving,
+        SkyFire
     };
     public ShootingArangement shootingArangement;
-    public float rpm;
+    private float rpm;
     public float bombTargetOffset;
-    public Vector3 spawn;
+    private Vector3 spawn;
     private Rigidbody shellInstance;
     private bool canSpawn = true;
     // Start is called before the first frame update
     void Start()
     {
-        bossTerrains = GameObject.FindGameObjectsWithTag("Terrain");
+        switch(bossType)
+        {
+            case BossType.Bomb:
+                bossTypeAsInt = 0;
+                break;
+            case BossType.Missle:
+                bossTypeAsInt = 1;
+                break;
+            case BossType.Bullet:
+                bossTypeAsInt = 2;
+                break;
+        }
+        //bossTerrains = GameObject.FindGameObjectsWithTag("Terrain");
         player = GameObject.FindGameObjectWithTag("Player");
-
-        StartFight();
         //rigidbody = GetComponent<Rigidbody>();
         spawnPosSet = GetComponent<SinDraw>();
+        gameManager = FindObjectOfType<GameManager>();
+        gameObject.SetActive(false);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(dead && bossTypeAsInt >= 2)
+        if(gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
         {
-            textOn = true;
-
-        } else if (dead)
-        {
-            bossTypeAsInt += Mathf.Clamp(1, 0, 2);
-            StartFight();
-        }
-        if(CurrentHealth <= 0)
-        {
-            dead = true;
-        }
-        if(textOn)
-        {
-            text.gameObject.SetActive(false);
-        }
+//            Debug.Log("Gate 1");
         if(GameManager.GlobalTimer - savedTime >= 0.5 && Launching)
         {
             target.AddForce(target.transform.up * (LaunchForce / 2), ForceMode.Impulse);
@@ -142,6 +140,20 @@ public class BossAI : MonoBehaviour
                 spawnPosSet.SinCosTan[1] = 1;
                 spawnPosSet.SinCosTan[2] = 0;
                 break;
+            case ShootingArangement.SkyFire:
+                rpm = 0.2f;
+                spawnPosSet.Speed = 20;
+                spawnPosSet.Size = 10;
+                spawnPosSet.xMulti = 1;
+                spawnPosSet.yMulti = 0;
+                spawnPosSet.zMulti = 1;
+                spawnPosSet.xOffset = player.transform.position.x;
+                spawnPosSet.yOffset = player.transform.position.y + 50;
+                spawnPosSet.zOffset = player.transform.position.z;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 1;
+                break;
         }
         if(canSpawn && GameManager.GlobalTimer - savedTime >= rpm)
         {
@@ -150,20 +162,15 @@ public class BossAI : MonoBehaviour
                case Ammo.bomb:
                     //Debug.Log("Spawned Bomb");
                     spawn = spawnPosSet.pos;
-                    Debug.Log("Rotation " + transform.rotation.y);
+                    //Debug.Log("Rotation " + transform.rotation.y);
                     //lookPos = player.transform.position - spawn;
                     //Debug.Log("LookPos - " + lookPos);
                     //Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-                    Rigidbody shellInstance = Instantiate(bullet[0], spawn, fireTransform.transform.rotation) as Rigidbody;
+                    Rigidbody shellInstance = Instantiate(bullet[0], new Vector3(spawn.x + Random.Range(-bombTargetOffset - 1, bombTargetOffset),spawn.y + Random.Range(-bombTargetOffset - 1, bombTargetOffset),spawn.z + Random.Range(-bombTargetOffset - 1, bombTargetOffset)), fireTransform.transform.rotation) as Rigidbody;
                     //TRIG USED HERE
                     // Sqrt(y^2 + (Sqrt(x^2 + z^2))^2)
-                    shellInstance.velocity = new Vector3
-                                                    (
-                                                        ((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x) / 6.35f,
-                                                        ((25 + Random.Range(-bombTargetOffset, bombTargetOffset))),
-                                                        ((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z) / 6.35f
-                    );
-
+                    //shellInstance.velocity = new Vector3(((player.transform.position.x + Random.Range(-bombTargetOffset, bombTargetOffset))- shellInstance.transform.position.x) / 6.35f,((25 + Random.Range(-bombTargetOffset, bombTargetOffset))),((player.transform.position.z + Random.Range(-bombTargetOffset, bombTargetOffset) )- shellInstance.transform.position.z) / 6.35f);
+                    shellInstance.velocity = 100 * -shellInstance.transform.up;
                     //canSpawn = false;
                     break;
                 case Ammo.missile:
@@ -176,16 +183,16 @@ public class BossAI : MonoBehaviour
                 case Ammo.bullet:
                     Debug.Log("Spawned Bullet");
                     spawn = spawnPosSet.pos;
-                    lookPos = player.transform.position - fireTransform.transform.position;
-                    shellInstance = Instantiate(bullet[2], spawn, Quaternion.LookRotation(lookPos)) as Rigidbody;
+                    shellInstance = Instantiate(bullet[2], spawn, fireTransform.transform.rotation) as Rigidbody;
                     lookPos = player.transform.position - shellInstance.transform.position;
                     shellInstance.transform.rotation = Quaternion.Slerp(shellInstance.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * 10000);
-                    shellInstance.velocity = (player.transform.position - shellInstance.transform.position) * 5;
+                    shellInstance.velocity = shellInstance.transform.forward * 10;
 
                     //canSpawn = false;
                     break;
             }
             savedTime = GameManager.GlobalTimer;
+        }
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -195,25 +202,45 @@ public class BossAI : MonoBehaviour
             CurrentHealth -= Mathf.Clamp(1, 0, StartHealth * (bossTypeAsInt + 1));
             BossBarFull.fillAmount = CurrentHealth / (StartHealth * (bossTypeAsInt + 1));
         }
-    }
-        private void OnTriggerEnter(Collider other)
-    {
-        if(other.transform.tag == "Player")
+        if(CurrentHealth <= 0 && gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
         {
-            savedTime = GameManager.GlobalTimer;
-            particle[0].Play();
-            target = other.attachedRigidbody;
-            Launching = true;
+            Debug.Log("Gate 2");
+            if(bossTypeAsInt >= 2)
+            {
+                dead = true;
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                bossTypeAsInt += Mathf.Clamp(1, 0, 2);
+                StartFight();
+            }
         }
     }
-    public void StartFight()
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.transform.tag == "Player" && gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
+        {
+            Debug.Log("Gate 3");
+            int rand = Random.Range(0,5);
+            if(rand == 0)
+            {
+                savedTime = GameManager.GlobalTimer;
+                particle[0].Play();
+                target = other.attachedRigidbody;
+                Launching = true;
+            }
+        }
+    }
+    private void StartFight()
     {
         for(int i = 0; i <= bossTerrains.Length - 1; i++)
         {
             bossTerrains[i].SetActive(false);
         }
         dead = false;
-        CurrentHealth = StartHealth * (bossTypeAsInt + 1);
+        gameObject.SetActive(true);
+        CurrentHealth = (StartHealth * (bossTypeAsInt + 1));
         BossBarFull.fillAmount = CurrentHealth / (StartHealth * (bossTypeAsInt + 1));
         bossTerrains[bossTypeAsInt].SetActive(true);
         gameObject.transform.position = BossSpawns[bossTypeAsInt].position;
@@ -222,19 +249,24 @@ public class BossAI : MonoBehaviour
         {
             case 0:
                 bossType = BossType.Bomb;
-                                ammo = Ammo.bomb;
-                shootingArangement = ShootingArangement.Starfire;
+                ammo = Ammo.bomb;
+                shootingArangement = ShootingArangement.SkyFire;
                 break;
                 case 1:
                 bossType = BossType.Missle;
-                                ammo = Ammo.missile;
+                ammo = Ammo.missile;
                 shootingArangement = ShootingArangement.LowWideMoving;
                 break;
                 case 2:
                 bossType = BossType.Bullet;
-                                ammo = Ammo.bullet;
+                ammo = Ammo.bullet;
                 shootingArangement = ShootingArangement.Gattling;
                 break;
         }
+    }
+    public void resetBoss()
+    {
+        bossTypeAsInt = 0;
+        StartFight();
     }
 }

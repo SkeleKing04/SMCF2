@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float savedTime;
+    private float savedTime;
     private void Awake()
     {
         savedTime = GameManager.GlobalTimer;

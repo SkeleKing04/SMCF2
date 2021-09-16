@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public Image HealthBarFull;
     public float StartHealth = 100;
     public float CurrentHealth;
+    public bool dead = false;
 
     private void Start()
     {
@@ -20,14 +21,11 @@ public class PlayerHealth : MonoBehaviour
             CurrentHealth -= Mathf.Clamp(1, 0, StartHealth);
             HealthBarFull.fillAmount = CurrentHealth / 100;
         }
-    }
-    private void Update()
-    {
         HealthBarFull.fillAmount = CurrentHealth / 100;
         switch (CurrentHealth)
         {
             case 0:
-                Destroy(gameObject);
+                dead = true;
                 break;
         }
     }

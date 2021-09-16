@@ -5,7 +5,8 @@ using UnityEngine.UIElements;
 
 public class Claws : MonoBehaviour
 {
-    public Movement movementScript;
+    private Movement movementScript;
+    private GameManager gameManager;
     public Transform[] claws;
     public Transform[] fireTransforms;
     public Rigidbody bullet;
@@ -14,11 +15,15 @@ public class Claws : MonoBehaviour
     void Start()
     {
         movementScript = FindObjectOfType<Movement>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
+        {
+//            Debug.Log("Gate 4");
         if (!movementScript.Dashing)
         {
             if (Input.GetButtonDown("Fire1"))
@@ -33,6 +38,7 @@ public class Claws : MonoBehaviour
                 Rigidbody shellInstance = Instantiate(bullet, fireTransforms[1].transform.position, fireTransforms[1].transform.rotation) as Rigidbody;
                 shellInstance.velocity = bulletForce * fireTransforms[1].up;
             }
+        }
         }
     }
     // Set the shell's velocity to the launch force in the fire

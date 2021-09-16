@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BombLob : MonoBehaviour
 {
-    public Rigidbody rigidbody;
+    private Rigidbody rigidbody;
     private GameObject player;
     private Vector3 lookPos;
-    public float explosionForce;
-    public float explosionRadius;
+    //public float explosionForce;
+    //public float explosionRadius;
     // Start is called before the first frame update
     void Start()
     {
