@@ -17,6 +17,7 @@ public class BossAI : MonoBehaviour
     public GameObject[] bossTerrains;
     public Transform[] PlayerSpawns;
     public Transform[] BossSpawns;
+    public GameObject[] BossModel;
     private GameObject player;
     public Image BossBarFull;
     public float StartHealth = 100;
@@ -222,14 +223,10 @@ public class BossAI : MonoBehaviour
         if(other.transform.tag == "Player" && gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
         {
             Debug.Log("Gate 3");
-            int rand = Random.Range(0,5);
-            if(rand == 0)
-            {
-                savedTime = GameManager.GlobalTimer;
-                particle[0].Play();
-                target = other.attachedRigidbody;
-                Launching = true;
-            }
+            savedTime = GameManager.GlobalTimer;
+            particle[0].Play();
+            target = other.attachedRigidbody;
+            Launching = true;
         }
     }
     private void StartFight()
@@ -263,6 +260,15 @@ public class BossAI : MonoBehaviour
                 shootingArangement = ShootingArangement.Gattling;
                 break;
         }
+        LoadBossModel(bossTypeAsInt);
+    }
+    public void LoadBossModel(int i)
+    {
+        foreach(GameObject model in BossModel)
+        {
+            model.SetActive(false);
+        }
+        BossModel[i].SetActive(true);
     }
     public void resetBoss()
     {
