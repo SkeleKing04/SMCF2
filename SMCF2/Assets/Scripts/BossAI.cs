@@ -41,13 +41,6 @@ public class BossAI : MonoBehaviour
         bullet
     };
     public Ammo ammo;
-    public enum ShootingArangement{
-        Gattling,
-        Starfire,
-        LowWideMoving,
-        SkyFire
-    };
-    public ShootingArangement shootingArangement;
     private float rpm;
     public float bombTargetOffset;
     private Vector3 spawn;
@@ -97,65 +90,6 @@ public class BossAI : MonoBehaviour
         //Quaternion test = gameObject.transform.rotation;
         //test.x += 90;
         //fireTransform.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-        switch (shootingArangement)
-        {
-            case ShootingArangement.Gattling:
-                rpm = 0.1f;
-                spawnPosSet.Speed = 1;
-                spawnPosSet.Size = 2;
-                spawnPosSet.xMulti = 1;
-                spawnPosSet.yMulti = 0;
-                spawnPosSet.zMulti = 1;
-                spawnPosSet.xOffset = 0;
-                spawnPosSet.yOffset = transform.position.y + 5;
-                spawnPosSet.zOffset = 0;
-                spawnPosSet.SinCosTan[0] = 0;
-                spawnPosSet.SinCosTan[1] = 0;
-                spawnPosSet.SinCosTan[2] = 1;
-            break;
-            case ShootingArangement.Starfire:
-                rpm = 0.5f;
-                spawnPosSet.Speed = 5;
-                spawnPosSet.Size = 10;
-                spawnPosSet.xMulti = 1;
-                spawnPosSet.yMulti = 0;
-                spawnPosSet.zMulti = 1;
-                spawnPosSet.xOffset = 0;
-                spawnPosSet.yOffset = transform.position.y + 10;
-                spawnPosSet.zOffset = 0;
-                spawnPosSet.SinCosTan[0] = 0;
-                spawnPosSet.SinCosTan[1] = 0;
-                spawnPosSet.SinCosTan[2] = 1;
-            break;
-            case ShootingArangement.LowWideMoving:
-                rpm = 0.4f;
-                spawnPosSet.Speed = 2;
-                spawnPosSet.Size = 5;
-                spawnPosSet.xMulti = 5;
-                spawnPosSet.yMulti = 1;
-                spawnPosSet.zMulti = 0;
-                spawnPosSet.xOffset = Mathf.Sin(Time.time * 1) * 10;
-                spawnPosSet.yOffset = transform.position.y + 10;
-                spawnPosSet.zOffset = Mathf.Cos(Time.time * 1) * 10;
-                spawnPosSet.SinCosTan[0] = 0;
-                spawnPosSet.SinCosTan[1] = 1;
-                spawnPosSet.SinCosTan[2] = 0;
-                break;
-            case ShootingArangement.SkyFire:
-                rpm = 0.2f;
-                spawnPosSet.Speed = 20;
-                spawnPosSet.Size = 10;
-                spawnPosSet.xMulti = 1;
-                spawnPosSet.yMulti = 0;
-                spawnPosSet.zMulti = 1;
-                spawnPosSet.xOffset = player.transform.position.x;
-                spawnPosSet.yOffset = player.transform.position.y + 50;
-                spawnPosSet.zOffset = player.transform.position.z;
-                spawnPosSet.SinCosTan[0] = 0;
-                spawnPosSet.SinCosTan[1] = 0;
-                spawnPosSet.SinCosTan[2] = 1;
-                break;
-        }
         if(canSpawn && GameManager.GlobalTimer - savedTime >= rpm)
         {
             switch (ammo)
@@ -247,17 +181,50 @@ public class BossAI : MonoBehaviour
             case 0:
                 bossType = BossType.Bomb;
                 ammo = Ammo.bomb;
-                shootingArangement = ShootingArangement.SkyFire;
+                rpm = 0.1f;
+                spawnPosSet.Speed = 1;
+                spawnPosSet.Size = 2;
+                spawnPosSet.xMulti = 1;
+                spawnPosSet.yMulti = 0;
+                spawnPosSet.zMulti = 0;
+                spawnPosSet.xOffset = 0;
+                spawnPosSet.yOffset = 1;
+                spawnPosSet.zOffset = 0;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 0;
                 break;
                 case 1:
                 bossType = BossType.Missle;
                 ammo = Ammo.missile;
-                shootingArangement = ShootingArangement.LowWideMoving;
+                rpm = 0.1f;
+                spawnPosSet.Speed = 1;
+                spawnPosSet.Size = 2;
+                spawnPosSet.xMulti = 2;
+                spawnPosSet.yMulti = 3;
+                spawnPosSet.zMulti = 0;
+                spawnPosSet.xOffset = 0;
+                spawnPosSet.yOffset = 0;
+                spawnPosSet.zOffset = 0;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 1;
                 break;
                 case 2:
                 bossType = BossType.Bullet;
                 ammo = Ammo.bullet;
-                shootingArangement = ShootingArangement.Gattling;
+                rpm = 0.1f;
+                spawnPosSet.Speed = 0;
+                spawnPosSet.Size = 0;
+                spawnPosSet.xMulti = 0;
+                spawnPosSet.yMulti = 0;
+                spawnPosSet.zMulti = 0;
+                spawnPosSet.xOffset = 0;
+                spawnPosSet.yOffset = 0;
+                spawnPosSet.zOffset = 0;
+                spawnPosSet.SinCosTan[0] = 0;
+                spawnPosSet.SinCosTan[1] = 0;
+                spawnPosSet.SinCosTan[2] = 1;
                 break;
         }
         LoadBossModel(bossTypeAsInt);
