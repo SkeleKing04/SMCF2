@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1594828325407160740}
   - component: {fileID: -3331935628698605023}
   - component: {fileID: 3177595870453314289}
+  - component: {fileID: 4778230952936960597}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Enemy Bullet
@@ -127,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3680ac47f5eb0494798dbed34e7c31df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedTime: 0
 --- !u!96 &-3331935628698605023
 TrailRenderer:
   serializedVersion: 2
@@ -136,7 +136,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1509920946543773866}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -185,6 +185,15 @@ TrailRenderer:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -239,3 +248,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dieAfter: 30
+--- !u!114 &4778230952936960597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509920946543773866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68dd75dace48ae4cb37414ed5418058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  MoveSpeed: 20
+  rotateSpeed: 100

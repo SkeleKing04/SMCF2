@@ -21,7 +21,7 @@ public class Claws : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.gameStateOrder[gameManager.gameStateOrder.Count - 1] == GameManager.GameState.Playing)
+        if(Time.timeScale != 0)
         {
 //            Debug.Log("Gate 4");
         if (!movementScript.Dashing)
@@ -31,6 +31,7 @@ public class Claws : MonoBehaviour
                 Debug.Log("left firing");
                 Rigidbody shellInstance = Instantiate(bullet, fireTransforms[0].transform.position, fireTransforms[0].transform.rotation) as Rigidbody;
                 shellInstance.velocity = bulletForce * fireTransforms[0].up;
+                Debug.DrawRay(gameObject.transform.position, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Color.red, 10);
             }
             if (Input.GetButtonDown("Fire2"))
             {
