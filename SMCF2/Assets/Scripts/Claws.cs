@@ -28,14 +28,12 @@ public class Claws : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                Debug.Log("left firing");
                 Rigidbody shellInstance = Instantiate(bullet, fireTransforms[0].transform.position, fireTransforms[0].transform.rotation) as Rigidbody;
                 shellInstance.velocity = bulletForce * fireTransforms[0].up;
                 Debug.DrawRay(gameObject.transform.position, new Vector3(transform.position.x, transform.position.y + 10, transform.position.z), Color.red, 10);
             }
             if (Input.GetButtonDown("Fire2"))
             {
-                Debug.Log("Right Firing");
                 Rigidbody shellInstance = Instantiate(bullet, fireTransforms[1].transform.position, fireTransforms[1].transform.rotation) as Rigidbody;
                 shellInstance.velocity = bulletForce * fireTransforms[1].up;
             }

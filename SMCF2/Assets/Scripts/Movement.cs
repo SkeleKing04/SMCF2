@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private GameManager gameManager;
-    private BossAI bossAI;
+    [SerializeField] private BossAI bossAI;
     private Claws claws;
     public float MoveSpeed;
     public float dashForce;
@@ -25,26 +25,20 @@ public class Movement : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        bossAI = FindObjectOfType<BossAI>();
         claws = FindObjectOfType<Claws>();
         rigidbody = GetComponent<Rigidbody>();
         terrain = FindObjectOfType<Terrain>();
     }
-
     // Update is called once per frame
     void Update()
     {
         if(Time.timeScale != 0)
         {
-//            Debug.Log("Gate 5");
+            //Debug.Log(bossAI);
             switch (bossAI.dead)
             {
                 case false:
-                    //Debug.Log("Vertical = " + Input.GetAxis("Vertical"));
-                    //Debug.Log("Horizontal = " + Input.GetAxis("Horizontal"));
                     lookPos = boss.transform.position - rigidbody.transform.position;
-                    //Debug.Log("lookPos is " + lookPos);
-                    //centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
                     lookPos.y = 0;
                     rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
                     lookPos = boss.transform.position - rigidbody.transform.position;
@@ -58,14 +52,11 @@ public class Movement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.W))
                     {
                         rigidbody.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-                        //ParticleSystem dashParticle = Instantiate(dashParticles[0], transform.position, gameObject.transform.rotation) as ParticleSystem;
                     }
                     else
                     {
                         rigidbody.AddForce(transform.forward * -dashForce, ForceMode.Impulse);
-                        //ParticleSystem dashParticle = Instantiate(dashParticles[1], transform.position, gameObject.transform.rotation) as ParticleSystem;
                     }
-                    //rigidbody.AddForce(transform.right * Input.GetAxis("Horizontal") * dashForce, ForceMode.Impulse);
                     savedTime = GameManager.GlobalTimer;
                     Dashing = true;
                 
