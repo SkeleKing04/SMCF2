@@ -3,18 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private BossAI bossAI;
+    [SerializeField]private BossAI bossAI;
     private PlayerHealth playerHealth;
-    public enum GameState
+    public enum MenuState
     {
-        Playing,
-        Paused
-    };
-    public List<GameState> gameStateOrder;
-    public enum MenuState{
+        empty,
         Off,
         MainMenu,
         InGame,
@@ -24,153 +21,74 @@ public class GameManager : MonoBehaviour
         GameOver
     };
     //public static MenuState menuState;
-    public List<MenuState> menuOrder;
+    public List<int> menuOrder;
     private Canvas canvas;
     public GameObject[] Menus;
     public static float GlobalTimer;
     public Text[] currentMenu;
+    [SerializeField] private AudioClip[] BGM;
     // Start is called before the first frame update
     void Start()
     {
-        bossAI = FindObjectOfType<BossAI>();
         canvas = FindObjectOfType<Canvas>();
         playerHealth = FindObjectOfType<PlayerHealth>();
-        //Menus = GameObject.FindGameObjectsWithTag("Menu");
         GlobalTimer = 0;
-        OpenMainMenu();
-        currentMenu[1].text = "";
-        foreach(GameObject menus2 in Menus)
-        {
-            currentMenu[1].text += menus2.name + "\n";
-        }
+        SetUI(0);
+        int rand = Random.Range(0, BGM.Length);
+        Debug.Log("Random number - " + rand);
+        gameObject.GetComponent<AudioSource>().clip = BGM[rand];
     }
-
     // Update is called once per frame
     void Update()
     {
 
         GlobalTimer += Time.deltaTime;
-        if(Input.GetKeyUp(KeyCode.Escape) && gameStateOrder[gameStateOrder.Count - 1] != GameState.Paused)
+        if(Input.GetKeyUp(KeyCode.Escape) && Time.timeScale != 0)
         {
-            PauseGame();
+            SetUI(2);
         }
         if(bossAI.dead)
         {
             bossAI.dead = false;
-            Victory();
+            SetUI(3);
         }
         if(playerHealth.dead)
         {
             playerHealth.dead = false;  
-            GameOver();
+            SetUI(4);
         }
     }
-    private void FixedUpdate()
+    public void LoadNextScene(string nextBossScene)
     {
-
+        SceneManager.LoadScene(nextBossScene);
     }
-    private void SetUI()
+    private void SetUI(int menu)
     {
-        currentMenu[0].text = "";
-        for(int i = 0; i < gameStateOrder.Count; i++)
+        menuOrder.Add(menu);
+        foreach(GameObject menus in Menus)
         {
-            currentMenu[0].text += gameStateOrder[i].ToString() + "\n";
+            menus.SetActive(false);
         }
-        foreach(GameObject menu in Menus)
+        Menus[menu].SetActive(true);
+        if (menu == 0)
         {
-            menu.SetActive(false);
-        }
-        switch(menuOrder[menuOrder.Count - 1])
-        {
-            case MenuState.Off:
-                break;
-            case MenuState.MainMenu:
-                Menus[0].SetActive(true);
-                break;
-            case MenuState.InGame:
-                Menus[1].SetActive(true);
-                break;
-            case MenuState.Options:
-                Menus[2].SetActive(true);
-                break;
-            case MenuState.Paused:
-                Menus[3].SetActive(true);
-                break;
-            case MenuState.Win:
-                Menus[4].SetActive(true);
-                break;
-            case MenuState.GameOver:
-                Menus[5].SetActive(true);
-                break;
-        }
-        switch(gameStateOrder[gameStateOrder.Count - 1])
-        {
-            case GameState.Playing:
             Time.timeScale = 1;
-            break;
-            case GameState.Paused:
+        }
+        else
+        {
             Time.timeScale = 0;
-            break;
         }
     }
     public void OpenMainMenu()
     {
-        Debug.Log("Opening Main Menu");
-        menuOrder.Add(MenuState.MainMenu);
-        gameStateOrder.Add(GameState.Paused);
-        SetUI();
-    }
-    public void RestartToMainMenu()
-    {
-        Debug.Log("Restarting To Main Menu");
-        menuOrder.Clear();
-        gameStateOrder.Clear();
-        OpenMainMenu();
-    }
-    public void StartGame()
-    {
-        Debug.Log("Starting Game");
-        menuOrder.Add(MenuState.InGame);
-        bossAI.resetBoss();
-        gameStateOrder.Add(GameState.Playing);
-        SetUI();
-    }
-    public void OpenOptions()
-    {
-        Debug.Log("Opening Options");
-        menuOrder.Add(MenuState.Options);
-        gameStateOrder.Add(GameState.Paused);
-        SetUI();
-    }
-    public void PauseGame()
-    {
-        Debug.Log("Pausing");
-        menuOrder.Add(MenuState.Paused);
-        gameStateOrder.Add(GameState.Paused);
-        SetUI();
-    }
-    public void Victory()
-    {
-        Debug.Log("Victory");
-        menuOrder.Add(MenuState.Win);
-        gameStateOrder.Add(GameState.Paused);
-        SetUI();
-    }
-    public void GameOver()
-    {
-        Debug.Log("Game Over");
-        menuOrder.Add(MenuState.GameOver);
-        gameStateOrder.Add(GameState.Paused);
-        SetUI();
+        SceneManager.LoadScene("MainMenuScene");
     }
     public void menuReturn()
     {
         Debug.Log("Returning to previous menu");
-        menuOrder.Remove(menuOrder[menuOrder.Count - 1]);
-        //Debug.Log("The count of gameStateOrder is " + gameStateOrder.Count + "\nThe gameState at the end is " + gameStateOrder[gameStateOrder.Count - 1]);
-        gameStateOrder.Remove(gameStateOrder[gameStateOrder.Count - 1]);
-        //Debug.Log("The gameState at the end is now " + gameStateOrder[gameStateOrder.Count - 1]);
-        SetUI();
+        menuOrder.RemoveAt(menuOrder.Count - 1);
+        SetUI(menuOrder[menuOrder.Count - 1]);
+        menuOrder.RemoveAt(menuOrder.Count - 1);
     }
     public void ExitGame()
     {

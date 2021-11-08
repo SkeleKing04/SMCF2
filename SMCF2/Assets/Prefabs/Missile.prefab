@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  MoveSpeed: 10
+  MoveSpeed: 25
   rotateSpeed: 10000
 --- !u!54 &1030405011812111277
 Rigidbody:
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be20a3ac6570c454ca01f5b85de8f703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieAfter: 3
+  dieAfter: 10
 --- !u!114 &8779571658368763136
 MonoBehaviour:
   m_ObjectHideFlags: 0

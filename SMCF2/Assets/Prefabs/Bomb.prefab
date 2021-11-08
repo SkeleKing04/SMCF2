@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1594828325407160740}
   - component: {fileID: -3331935628698605023}
   - component: {fileID: 3177595870453314289}
+  - component: {fileID: 4778230952936960597}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Enemy Bullet
@@ -127,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3680ac47f5eb0494798dbed34e7c31df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savedTime: 0
 --- !u!96 &-3331935628698605023
 TrailRenderer:
   serializedVersion: 2
@@ -148,7 +148,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,7 +169,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -185,13 +185,22 @@ TrailRenderer:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -238,4 +247,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be20a3ac6570c454ca01f5b85de8f703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dieAfter: 30
+  dieAfter: 1000
+--- !u!114 &4778230952936960597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509920946543773866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68dd75dace48ae4cb37414ed5418058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  MoveSpeed: 100
+  rotateSpeed: 10
