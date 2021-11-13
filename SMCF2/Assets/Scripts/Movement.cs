@@ -34,17 +34,11 @@ public class Movement : MonoBehaviour
     {
         if(Time.timeScale != 0)
         {
-            //Debug.Log(bossAI);
-            switch (bossAI.dead)
-            {
-                case false:
-                    lookPos = boss.transform.position - rigidbody.transform.position;
-                    lookPos.y = 0;
-                    rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-                    lookPos = boss.transform.position - rigidbody.transform.position;
-                    centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
-                    break;
-            }
+            lookPos = boss.transform.position - rigidbody.transform.position;
+            lookPos.y = 0;
+            rigidbody.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
+            lookPos = boss.transform.position - rigidbody.transform.position;
+            centerOfCrab.transform.rotation = Quaternion.Slerp(rigidbody.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * rotateSpeed);
             if (!Dashing)
             {
                 if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))

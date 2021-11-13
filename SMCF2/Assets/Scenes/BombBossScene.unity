@@ -10112,6 +10112,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4951739065382702399, guid: f99a290466e7b7c47bf0a1e1e8b4df25, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5065431018102615455, guid: f99a290466e7b7c47bf0a1e1e8b4df25, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10236,6 +10240,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8779607801155378369, guid: f99a290466e7b7c47bf0a1e1e8b4df25, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9199577038647590084, guid: f99a290466e7b7c47bf0a1e1e8b4df25, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10283,7 +10291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7592334943142179264, guid: f7747e204c35f1145bf499eae4ab7c83, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 398.51
+      value: 275
       objectReference: {fileID: 0}
     - target: {fileID: 7592334943142179264, guid: f7747e204c35f1145bf499eae4ab7c83, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10313,6 +10321,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7592334943142179265, guid: f7747e204c35f1145bf499eae4ab7c83, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 5915368436659173578}
     - target: {fileID: 7592334943142179266, guid: f7747e204c35f1145bf499eae4ab7c83, type: 3}
       propertyPath: m_Name
       value: Crab
@@ -10469,7 +10481,6 @@ MonoBehaviour:
   BossBarFull: {fileID: 405359085}
   StartHealth: 100
   CurrentHealth: 0
-  dead: 0
   savedTime:
   - 0
   - 0

@@ -14,6 +14,7 @@ public class DieAfterTime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // die when time's up
         if(GameManager.GlobalTimer >= savedTime + dieAfter){
             Destroy(gameObject);
         }

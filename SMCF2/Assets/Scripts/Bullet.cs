@@ -6,9 +6,10 @@ public class Bullet : MonoBehaviour
 {
     private void OnCollisionEnter(Collision collision)
     {
+        // when colliding with anything, (excluding the player)
+        // die
         if(collision.transform.tag != "Player")
         {
-            //Debug.Log("Collided at " + gameObject.transform.position);
             Destroy(gameObject);
         }
     }

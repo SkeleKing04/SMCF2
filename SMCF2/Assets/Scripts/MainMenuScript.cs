@@ -18,6 +18,18 @@ public class MainMenuScript : MonoBehaviour
         {
             menu.SetActive(false);
         }
+        switch(GameManager.playerBossDead[0])
+        {
+            case true:
+                menus[3].SetActive(true);
+                break;
+        }
+        switch(GameManager.playerBossDead[1])
+        {
+            case true:
+                menus[2].SetActive(true);
+                break;
+        }
         menus[SelectedMenu].SetActive(true);
     }
     public void startFight(string boss)
