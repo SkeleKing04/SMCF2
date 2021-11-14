@@ -22,14 +22,12 @@ public class MainMenuScript : MonoBehaviour
         {
             case true:
                 menus[3].SetActive(true);
-                GameManager.playerBossDead[0] = false;
                 break;
         }
         switch(GameManager.playerBossDead[1])
         {
             case true:
                 menus[2].SetActive(true);
-                GameManager.playerBossDead[1] = false;
                 break;
         }
         menus[SelectedMenu].SetActive(true);
