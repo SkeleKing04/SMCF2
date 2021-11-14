@@ -27,13 +27,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         // finds the canvas and playerhealth script
         canvas = FindObjectOfType<Canvas>();
         playerHealth = FindObjectOfType<PlayerHealth>();
         // resets the timer
         GlobalTimer = 0;
         // loads the menu in menus[0]
-        SetUI(0);
+        //SetUI(0);
         // loads a random song
         int rand = Random.Range(0, BGM.Length);
         gameObject.GetComponent<AudioSource>().clip = BGM[rand];
@@ -55,12 +56,26 @@ public class GameManager : MonoBehaviour
         playerBossDead[1] = false;
         SceneManager.LoadScene(nextBossScene);
     }
-    private void SetUI(int menu)
+    public void SetUI(int menu)
     {
         // disable all the menus
         foreach(GameObject menus in Menus)
         {
             menus.SetActive(false);
+        }
+        switch(GameManager.playerBossDead[0])
+        {
+            case true:
+                Menus[3].SetActive(true);
+                GameManager.playerBossDead[0] = false;
+                break;
+        }
+        switch(GameManager.playerBossDead[1])
+        {
+            case true:
+                Menus[2].SetActive(true);
+                GameManager.playerBossDead[1] = false;
+                break;
         }
         // add this menu to be load to the menu order
         menuOrder.Add(menu);
@@ -80,6 +95,10 @@ public class GameManager : MonoBehaviour
     public void OpenMainMenu()
     {
         SceneManager.LoadScene("MainMenuScene");
+    }
+        public void startFight(string boss)
+    {
+        SceneManager.LoadScene(boss);
     }
     public void menuReturn()
     {
