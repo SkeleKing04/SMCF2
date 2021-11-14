@@ -8,8 +8,6 @@ public class PlayerHealth : MonoBehaviour
     public Image HealthBarFull;
     public float StartHealth = 100;
     public float CurrentHealth;
-    public bool dead = false;
-
     private void Start()
     {
         CurrentHealth = StartHealth;
@@ -25,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
         switch (CurrentHealth)
         {
             case 0:
-                dead = true;
+                GameManager.playerBossDead[0] = true;
                 break;
         }
     }
