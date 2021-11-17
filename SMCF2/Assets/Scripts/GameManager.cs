@@ -7,15 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // boss AI script
-    [SerializeField]private BossAI bossAI;
-    // player health script
-    private PlayerHealth playerHealth;
     // a list of the order that the menus have been in
     // used for returning to a previous menu
     public List<int> menuOrder;
-    // the canvas
-    private Canvas canvas;
     // the menus in the scene
     public GameObject[] Menus;
     // the global timer
@@ -23,14 +17,10 @@ public class GameManager : MonoBehaviour
     public static float GlobalTimer;
     // MUSIC BB
     [SerializeField] private AudioClip[] BGM;
-    static public bool[] playerBossDead = {false,false};
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1;
-        // finds the canvas and playerhealth script
-        canvas = FindObjectOfType<Canvas>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
         // resets the timer
         GlobalTimer = 0;
         // loads the menu in menus[0]
@@ -52,8 +42,6 @@ public class GameManager : MonoBehaviour
     // load the scene
     public void LoadNextScene(string nextBossScene)
     {
-        playerBossDead[0] = false;
-        playerBossDead[1] = false;
         SceneManager.LoadScene(nextBossScene);
     }
     public void SetUI(int menu)
@@ -62,20 +50,6 @@ public class GameManager : MonoBehaviour
         foreach(GameObject menus in Menus)
         {
             menus.SetActive(false);
-        }
-        switch(GameManager.playerBossDead[0])
-        {
-            case true:
-                Menus[3].SetActive(true);
-                GameManager.playerBossDead[0] = false;
-                break;
-        }
-        switch(GameManager.playerBossDead[1])
-        {
-            case true:
-                Menus[2].SetActive(true);
-                GameManager.playerBossDead[1] = false;
-                break;
         }
         // add this menu to be load to the menu order
         menuOrder.Add(menu);
@@ -96,7 +70,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenuScene");
     }
-        public void startFight(string boss)
+    public void startFight(string boss)
     {
         SceneManager.LoadScene(boss);
     }

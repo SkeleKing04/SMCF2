@@ -5,29 +5,21 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    private GameManager gameManager;
-    [SerializeField] private BossAI bossAI;
-    private Claws claws;
     public float MoveSpeed;
     public float dashForce;
     public float jumpForce;
     private bool Grounded;
     public bool Dashing;
     private Rigidbody rigidbody;
-    private Terrain terrain;
     public GameObject boss;
     public GameObject centerOfCrab;
     private float rotateSpeed = 1000;
     private Vector3 lookPos;
     private float savedTime;
-    public ParticleSystem[] dashParticles;
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        claws = FindObjectOfType<Claws>();
         rigidbody = GetComponent<Rigidbody>();
-        terrain = FindObjectOfType<Terrain>();
     }
     // Update is called once per frame
     void Update()
