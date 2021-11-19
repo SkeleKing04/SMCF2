@@ -22,6 +22,7 @@ public class Claws : MonoBehaviour
     {
         movementScript = FindObjectOfType<Movement>();
         gameManager = FindObjectOfType<GameManager>();
+        boss = GameObject.FindWithTag("Boss");
     }
 
     // Update is called once per frame

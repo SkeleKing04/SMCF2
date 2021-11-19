@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
         switch (CurrentHealth)
         {
             case 0:
-                gameManager.SetUI(3);
+                gameManager.SetUI(6);
                 break;
         }
     }

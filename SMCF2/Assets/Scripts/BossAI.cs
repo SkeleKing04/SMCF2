@@ -105,7 +105,7 @@ public class BossAI : MonoBehaviour
         // die
         if(CurrentHealth <= 0 && Time.timeScale != 0)
         {
-            gameManager.SetUI(2);
+            gameManager.SetUI(5);
         }
     }
     private void OnTriggerEnter(Collider other)
